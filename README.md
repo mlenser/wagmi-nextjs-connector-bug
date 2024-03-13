@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Reproduction steps
 
-## Getting Started
+1. Run the `pnpm dev` command
+2. Open the app
+3. Connect a wallet on Sepolia
+4. You should see total WETH supply and a successful simulated contract.
+5. Trigger a hot reload by adding 2 line breaks to [Connected.tsx](./src/app/Connected.tsx) for example.
+6. You should see an error in the UI and details in the console:
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+TypeError: connection.connector.getProvider is not a function
+at getConnectorClient (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/@wagmi+core@2.6.5_@types+react@18.2.65_react@18.2.0_typescript@5.4.2_viem@2.8.5/node_modules/@wagmi/core/dist/esm/actions/getConnectorClient.js:40:50)
+at simulateContract (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/@wagmi+core@2.6.5_@types+react@18.2.65_react@18.2.0_typescript@5.4.2_viem@2.8.5/node_modules/@wagmi/core/dist/esm/actions/simulateContract.js:22:113)
+at Object.queryFn (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/@wagmi+core@2.6.5_@types+react@18.2.65_react@18.2.0_typescript@5.4.2_viem@2.8.5/node_modules/@wagmi/core/dist/esm/query/simulateContract.js:25:98)
+at Object.fetchFn [as fn] (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/@tanstack+query-core@5.28.0/node_modules/@tanstack/query-core/build/modern/query.js:197:27)
+at run (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/@tanstack+query-core@5.28.0/node_modules/@tanstack/query-core/build/modern/retryer.js:93:31)
+at eval (webpack-internal:///(app-pages-browser)/./node_modules/.pnpm/@tanstack+query-core@5.28.0/node_modules/@tanstack/query-core/build/modern/retryer.js:120:11)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+I've tried with and without these in the [config.ts](./src/app/config.ts) file. It didn't seem to make a difference.
+```
+  enableCoinbase: true,
+  enableEIP6963: true,
+  enableInjected: true,
+  enableWalletConnect: true,
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

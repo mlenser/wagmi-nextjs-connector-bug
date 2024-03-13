@@ -21,8 +21,12 @@ const metadata = {
 const chains = [mainnet, sepolia] as const;
 export const config = defaultWagmiConfig({
   chains,
-  projectId,
+  enableCoinbase: true,
+  enableEIP6963: true,
+  enableInjected: true,
+  enableWalletConnect: true,
   metadata,
+  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '',
   ssr: true,
   storage: createStorage({
     storage: cookieStorage,
