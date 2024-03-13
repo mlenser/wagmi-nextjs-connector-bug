@@ -7,6 +7,7 @@ import { type State, WagmiProvider } from 'wagmi';
 import { config } from './config';
 
 const queryClient = new QueryClient();
+import './walletConnectInit';
 
 export const Providers = ({
   children,
